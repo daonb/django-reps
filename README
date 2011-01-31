@@ -1,0 +1,5 @@
+django-reps is a Django app t manage the whole voting "shebang".
+
+It takes care of the whole process: Voters, votes, electorals, vote subjects, issues, and results.
+
+Built upon Django, piston, HTML, and Javascript.
