@@ -1,23 +1,23 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
+import time
 from django.test import TestCase
+from django.contrib.auth.models import User
+
+from models import Park
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
+    def setUp(self):
+        self.u1 = User.objects.create(username='user1')
+        self.u2 = User.objects.create(username='user2')
+        self.u3 = User.objects.create(username='user3')
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
-
->>> 1 + 1 == 2
-True
-"""}
+    def testPark(self):
+        """
+        Tests the parking in a rep and its basic properties and action
+        """
+        p = Park.objects.create(owner=self.u1, rep=self.u2)
+        self.assertTrue(p.is_current)
+        p2 = Park.objects.create(owner=self.u1, rep=self.u3)
+        self.assertTrue(p2.is_current)
+        time.sleep(1)
+        self.assertTrue(not p.is_current)
 
